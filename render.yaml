@@ -1,0 +1,14 @@
+# render.yaml
+services:
+  - type: web
+    name: skedu
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn skedu.wsgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: skedu.settings
+      - key: SECRET_KEY
+        value: 'django-insecure-(gv)+uc3)x2m*qt4-wb=ph@^!1sw5%ik0vfosv9s4@^d60frnj'
+      - key: DEBUG
+        value: "False"
