@@ -1,14 +1,20 @@
-# render.yaml
 services:
   - type: web
-    name: skedu
+    name: skedu-app
     env: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn skedu.wsgi:application
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn skedu.wsgi:application"
     envVars:
-      - key: DJANGO_SETTINGS_MODULE
-        value: skedu.settings
-      - key: SECRET_KEY
-        value: 'django-insecure-(gv)+uc3)x2m*qt4-wb=ph@^!1sw5%ik0vfosv9s4@^d60frnj'
       - key: DEBUG
-        value: "False"
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: skedu-db
+          property: connectionString
+
+databases:
+  - name: skedu-db
+    databaseName: newedu
+    user: root
